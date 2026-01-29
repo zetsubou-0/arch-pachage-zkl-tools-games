@@ -12,3 +12,6 @@ Update build script to move all packages under all folder after build has been f
 
 1.0.4-1
 Write desktop entity under /usr/share/applications into the "Game" category
+
+1.0.4-2
+Add examples.
