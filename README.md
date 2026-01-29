@@ -19,7 +19,12 @@ Server = https://zetsubou-0.github.io/arch-pachage-zkl-tools-games/repo/any
 sudo pacman -Sy
 ```
 
-### Build from sources
+## How to install
+```
+sudo pacman -S zkl-tools-games
+```
+
+## Build from sources
 1. Run `./build.sh`
 2. Find the package under `repo/any/zkl-tools-games-{{version}}-any.pkg.tar.zst`
 3. Run the following command (replace the version):
