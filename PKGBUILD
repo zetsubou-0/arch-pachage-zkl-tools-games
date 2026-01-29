@@ -1,9 +1,9 @@
 # Maintainer: Kiryl Lutsyk <zetsubou.zero.0@gmail.com>
 pkgname=zkl-tools-games
 pkgver=1.0.3
-pkgrel=7
+pkgrel=8
 epoch=
-pkgdesc="Tools to create links ,scripts and it can work with games on Arch based systems"
+pkgdesc="This tools package is based on Proton compatibility and is used to simplify working with Windows games."
 arch=(
     "any"
 )
@@ -11,9 +11,7 @@ url="https://github.com/zetsubou-0/arch-pachage-zkl-tools-games"
 license=(
     "MIT"
 )
-groups=(
-    "zkl-tools"
-)
+groups=()
 depends=(
     "bash"
     "steam"
@@ -27,7 +25,7 @@ replaces=()
 backup=()
 options=()
 install=
-changelog=
+changelog=changelog.txt
 source=(
     "proton-run.sh"
     "proton-prefix.conf"
