@@ -22,3 +22,13 @@ done
 
 # Rebuild repo DB from scratch (most reliable)
 repo-add -n -R "${REPO_NAME}.db.tar.gz" ./*.pkg.tar.zst
+
+# Move all packages under "all-packages" folder
+cd ../..
+ALL_PACKAGES_FOLDER="all-packages"
+if [ ! -d "$ALL_PACKAGES_FOLDER" ]; then
+    echo "[INFO] '$ALL_PACKAGES_FOLDER' does not exist. Creating new one."
+    mkdir -p "$ALL_PACKAGES_FOLDER"
+fi
+mv ./*.pkg.tar.zst $ALL_PACKAGES_FOLDER
+

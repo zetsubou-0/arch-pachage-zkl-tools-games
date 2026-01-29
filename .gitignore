@@ -1,4 +1,5 @@
 /.idea
 /src
 /pkg
+/all-packages
 /zkl-tools-games-*.pkg.tar.zst

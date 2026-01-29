@@ -18,8 +18,8 @@ PFX_DIR="$COMPAT_ROOT/pfx"                      # actual wine prefix lives here
 
 # Create compatdata structure Proton expects
 if [ ! -d "$PFX_DIR" ]; then
-	echo "$PFX_DIR does not exist. Creating new."
-	mkdir -p "$PFX_DIR"
+    echo "$PFX_DIR does not exist. Creating new."
+    mkdir -p "$PFX_DIR"
 fi
 
 export STEAM_COMPAT_DATA_PATH="$COMPAT_ROOT"
