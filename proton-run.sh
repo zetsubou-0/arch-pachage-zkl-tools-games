@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "Welcome to proton run tool"
 PATH_TO_BIN="${1:?Usage: proton-run <path_to_exe>}"
 
 if [ -e /usr/share/steam/compatibilitytools.d/proton-cachyos/proton ]
