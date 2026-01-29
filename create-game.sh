@@ -27,7 +27,7 @@ done
 
 function show_help() {
     echo "
-Create game based on the provided data
+Create game launcher based on the provided data
 
 -p  game path (path to bin)
 -n  game name
@@ -90,6 +90,35 @@ Categories=Game;
     echo "Creating desktop entity ..."
 }
 
+function extractIcons() {
+    local icon_folder_path="/tmp/zkl-game-$game_name/icons"
+    local ico_file="$game_name.ico"
+    local current_dir="$(pwd)"
+    local width=16
+    local height=16
+    local ico_app_path=""
+    mkdir -p "$icon_folder_path"
+    cd "$icon_folder_path"
+    wrestool -x -t 14 "$game_path" > "$ico_file"
+    magick "$ico_file" "$game_name.png"
+    for icon_png in ./$game_name*.png; do
+        width="$(identify -format "%w" $icon_png)"
+        height="$(identify -format "%h" $icon_png)"
+        ico_app_path="/usr/share/icons/hicolor/$width"x"$height/apps/$game_name.png"
+        echo "Create icon under $ico_app_path"
+        sudo cp "$icon_png" "$ico_app_path"
+    done
+    rm -r "$icon_folder_path"
+    cd "$current_dir"
+    icon_path="$game_name"
+    updateIconCache
+}
+
+function updateIconCache() {
+    sudo gtk-update-icon-cache -f /usr/share/icons/hicolor
+    sudo update-desktop-database /usr/share/applications
+}
+
 checkData
 
 if [ $valid_data != 1 ];then
@@ -108,4 +137,5 @@ fi
 echo ""
 
 createScript
+extractIcons
 createDesktopEntity

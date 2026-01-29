@@ -15,3 +15,8 @@ Write desktop entity under /usr/share/applications into the "Game" category
 
 1.0.4-2
 Add examples.
+
+1.0.5-1
+Add man page.
+Auto extract icons.
+
