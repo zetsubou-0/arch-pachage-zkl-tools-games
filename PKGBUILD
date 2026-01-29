@@ -1,6 +1,6 @@
 # Maintainer: Kiryl Lutsyk <zetsubou.zero.0@gmail.com>
 pkgname=zkl-tools-games
-pkgver=1.0.2
+pkgver=1.0.3
 pkgrel=1
 epoch=
 pkgdesc="Tools to create links ,scripts and it can work with games on Arch based systems"
