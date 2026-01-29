@@ -77,7 +77,6 @@ proton-run '$game_path'
 
 function createDesktopEntity() {
     local script_full_path="${script_path%/}/$game_name.sh"
-    echo "Creating desktop entity ..."
     echo "[Desktop Entry]
 Type=Application
 Version=1.0
@@ -86,8 +85,9 @@ Comment='$game_name' runs via Proton. Game entity was created by a script.
 Exec=$script_full_path
 Icon=$icon_path
 Terminal=false
-Categories=Games;
-" > "${HOME%/}/.local/share/applications/$game_name.desktop"
+Categories=Game;
+" | sudo tee "/usr/share/applications/$game_name.desktop" > /dev/null
+    echo "Creating desktop entity ..."
 }
 
 checkData

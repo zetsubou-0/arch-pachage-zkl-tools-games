@@ -1,7 +1,7 @@
 # Maintainer: Kiryl Lutsyk <zetsubou.zero.0@gmail.com>
 pkgname=zkl-tools-games
-pkgver=1.0.3
-pkgrel=11
+pkgver=1.0.4
+pkgrel=1
 epoch=
 pkgdesc="This tools package is based on Proton compatibility and is used to simplify working with Windows games."
 arch=(

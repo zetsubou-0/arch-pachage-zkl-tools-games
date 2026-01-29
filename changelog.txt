@@ -9,3 +9,6 @@ Update README.md.
 
 1.0.3-11
 Update build script to move all packages under all folder after build has been finished.
+
+1.0.4-1
+Write desktop entity under /usr/share/applications into the "Game" category
