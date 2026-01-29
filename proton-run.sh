@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PATH_TO_BIN="${1:?Usage: proton-run.sh <path_to_exe>}"
+PATH_TO_BIN="${1:?Usage: proton-run <path_to_exe>}"
+
+if [ -e /usr/share/steam/compatibilitytools.d/proton-cachyos/proton ]
+then
+    echo "Proton executable exists"
+else
+    echo "Proton executable does not exist"
+    exit 1;
+fi
 
 echo "Execute for path: $PATH_TO_BIN"
 
-COMPAT_ROOT="$HOME/proton-prefix/default"   # compatdata root
+COMPAT_ROOT="/var/lib/proton-prefix/default"    # compatdata root
 PFX_DIR="$COMPAT_ROOT/pfx"                      # actual wine prefix lives here
 
 # Create compatdata structure Proton expects

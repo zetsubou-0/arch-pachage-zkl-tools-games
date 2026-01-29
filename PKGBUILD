@@ -1,7 +1,7 @@
 # Maintainer: Kiryl Lutsyk <zetsubou.zero.0@gmail.com>
 pkgname=zkl-tools-games
 pkgver=1.0.0
-pkgrel=1
+pkgrel=4
 epoch=
 pkgdesc="Tools to create links ,scripts and it can work with games on Arch based systems"
 arch=(
@@ -30,10 +30,12 @@ install=
 changelog=
 source=(
     "proton-run.sh"
+    "proton-prefix.conf"
     "create-game.sh"
 )
 noextract=()
 sha256sums=(
+    "SKIP"
     "SKIP"
     "SKIP"
 )
@@ -41,6 +43,9 @@ validpgpkeys=()
 
 package() {
     install -Dm755 "$srcdir/proton-run.sh"    "$pkgdir/usr/bin/proton-run"
+    install -Dm644 "$srcdir/proton-prefix.conf" \
+        "$pkgdir/usr/lib/tmpfiles.d/proton-prefix.conf"
+
     install -Dm755 "$srcdir/create-game.sh"   "$pkgdir/usr/bin/create-game"
 }
 
