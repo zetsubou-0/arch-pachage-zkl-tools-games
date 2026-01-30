@@ -1,7 +1,72 @@
-create-game - Create game launcher based on the provided data
+.TH CREATE-GAME 1 "January 2026" "create-game" "User Commands"
 
--p  game path (path to bin)
--n  game name
--s  folder with scripts
--i  icon_path
--h  show help
+.SH NAME
+create-game \- create a game launcher using Proton
+
+.SH SYNOPSIS
+.B create-game
+.RI [ options ]
+
+.SH DESCRIPTION
+.B create-game
+creates a desktop launcher and helper script for running games via Proton
+based on the provided parameters.
+
+The tool generates:
+.IP \[bu] 2
+A launch script
+.IP \[bu]
+A desktop entry
+.IP \[bu]
+Optional icon installation
+
+.SH OPTIONS
+.TP
+.BR \-p " " \fIpath\fR
+Path to the game executable (binary or .exe file).
+
+.TP
+.BR \-n " " \fIname\fR
+Game name. This value is used as the launcher name and identifier.
+
+.TP
+.BR \-s " " \fIdirectory\fR
+Directory where the generated launch script will be stored.
+
+.TP
+.BR \-i " " \fIicon_path\fR
+Path to the game icon file (for example, .ico or .png).
+
+.TP
+.BR \-h
+Show help information and exit.
+
+.SH EXAMPLES
+Create a launcher for Warcraft III:
+
+.nf
+create-game \\
+    -p "/mnt/store/Games/Warcraft 3/Frozen Throne.exe" \\
+    -n war3 \\
+    -s ~/scripts \\
+    -i "/mnt/store/Games/Warcraft 3/replays.ico"
+.fi
+
+.SH FILES
+.TP
+.I /usr/share/applications/
+Desktop entry location.
+
+.TP
+.I /usr/share/icons/hicolor/
+Icon installation directory.
+
+.SH SEE ALSO
+.BR proton (1),
+.BR steam (1)
+
+.SH AUTHOR
+Written by Kiryl Lutsyk.
+
+.SH LICENSE
+MIT License.

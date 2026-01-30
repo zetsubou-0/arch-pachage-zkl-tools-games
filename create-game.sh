@@ -5,21 +5,21 @@ if [ "$(whoami)" == "root" ];then
     exit 1
 fi
 
-game_path=""
-game_name=""
-script_path=""
-icon_path=""
-valid_data=1
-agree_with_data=""
+GAME_PATH=""
+GAME_NAME=""
+SCRIPT_PATH=""
+ICON_GAME_PATH=""
+VALID_DATA_FLAG=1
+AGREE_WITH_DATA_FLAG=""
 
 while getopts p:n:s:i:h option
 do
   case "${option}"
       in
-          p) game_path=${OPTARG};;
-          n) game_name=${OPTARG};;
-          s) script_path=${OPTARG};;
-          i) icon_path=${OPTARG};;
+          p) GAME_PATH=${OPTARG};;
+          n) GAME_NAME=${OPTARG};;
+          s) SCRIPT_PATH=${OPTARG};;
+          i) ICON_GAME_PATH=${OPTARG};;
           h) show_help;;
           *) show_help;;
   esac
@@ -32,85 +32,85 @@ Create game launcher based on the provided data
 -p  game path (path to bin)
 -n  game name
 -s  folder with scripts
--i  icon_path
+-i  game icon
 -h  show help
 "
     exit 0
 }
 
 function checkData() {
-    if [ -z "$game_path" ]; then
+    if [ -z "$GAME_PATH" ]; then
         echo "Full path to bin is required. Please set path with -p key."
-        valid_data=0
+        VALID_DATA_FLAG=0
     fi
-    if [ -z "$script_path" ]; then
+    if [ -z "$SCRIPT_PATH" ]; then
         echo "Script path to bin is required. Please set path with -s key."
-        valid_data=0
+        VALID_DATA_FLAG=0
     fi
-    if [ -z "$game_name" ]; then
+    if [ -z "$GAME_NAME" ]; then
         echo "Name is required. Please set path with -n key."
-        valid_data=0
+        VALID_DATA_FLAG=0
     fi
 }
 
 function normalizeName() {
-    game_name="$(echo "$game_name" | tr -d "[:space:]")"
+    GAME_NAME="$(echo "$GAME_NAME" | tr -d "[:space:]")"
 }
 
 function printInfo() {
-    echo "Bin path (executable application): '$game_path'"
-    echo "Scripts root folder: '$script_path'"
-    echo "Game name: '$game_name'"
-    echo "Game Icon: '$icon_path'"
+    echo "Bin path (executable application): '$GAME_PATH'"
+    echo "Scripts root folder: '$SCRIPT_PATH'"
+    echo "Game name: '$GAME_NAME'"
+    echo "Game Icon: '$ICON_GAME_PATH'"
 }
 
 function createScript() {
-    local script_full_path="${script_path%/}/$game_name.sh"
+    local SCRIPT_FULL_PATH="${SCRIPT_PATH%/}/$GAME_NAME.sh"
     echo "Creating script ..."
     echo "#!/usr/bin/env bash
 
-proton-run '$game_path'
-    " > "$script_full_path"
-    chmod +x "$script_full_path"
+proton-run '$GAME_PATH'
+    " > "$SCRIPT_FULL_PATH"
+    chmod +x "$SCRIPT_FULL_PATH"
     echo "Script has been created successfully."
 }
 
 function createDesktopEntity() {
-    local script_full_path="${script_path%/}/$game_name.sh"
+    local SCRIPT_FULL_PATH="${SCRIPT_PATH%/}/$GAME_NAME.sh"
     echo "[Desktop Entry]
 Type=Application
 Version=1.0
-Name=$game_name
-Comment='$game_name' runs via Proton. Game entity was created by a script.
-Exec=$script_full_path
-Icon=$icon_path
+Name=$GAME_NAME
+Comment='$GAME_NAME' runs via Proton. Game entity was created by a script.
+Exec=$SCRIPT_FULL_PATH
+Icon=$ICON_GAME_PATH
 Terminal=false
 Categories=Game;
-" | sudo tee "/usr/share/applications/$game_name.desktop" > /dev/null
+" | sudo tee "/usr/share/applications/$GAME_NAME.desktop" > /dev/null
     echo "Creating desktop entity ..."
 }
 
 function extractIcons() {
-    local icon_folder_path="/tmp/zkl-game-$game_name/icons"
-    local ico_file="$game_name.ico"
-    local current_dir="$(pwd)"
-    local width=16
-    local height=16
-    local ico_app_path=""
-    mkdir -p "$icon_folder_path"
-    cd "$icon_folder_path"
-    wrestool -x -t 14 "$game_path" > "$ico_file"
-    magick "$ico_file" "$game_name.png"
-    for icon_png in ./$game_name*.png; do
-        width="$(identify -format "%w" $icon_png)"
-        height="$(identify -format "%h" $icon_png)"
-        ico_app_path="/usr/share/icons/hicolor/$width"x"$height/apps/$game_name.png"
-        echo "Create icon under $ico_app_path"
-        sudo cp "$icon_png" "$ico_app_path"
+    local ICON_FOLDER_PATH="/tmp/zkl-game-$GAME_NAME/icons"
+    local ICON_FILE="$GAME_NAME.ico"
+    local CURRENT_DIR="$(pwd)"
+    local WIDTH=16
+    local HEIGHT=16
+    local ICON_APP_PATH=""
+    mkdir -p "$ICON_FOLDER_PATH"
+    cd "$ICON_FOLDER_PATH"
+    wrestool -x -t 14 "$GAME_PATH" > "$ICON_FILE"
+    magick "$ICON_FILE" "$GAME_NAME.png"
+    for ICON_PNG in ./$GAME_NAME*.png; do
+        WIDTH="$(identify -format "%w" $ICON_PNG)"
+        HEIGHT="$(identify -format "%h" $ICON_PNG)"
+        ICON_APP_PATH="/usr/share/icons/hicolor/$WIDTH"x"$HEIGHT/apps/$GAME_NAME.png"
+        echo "Create icon under $ICON_APP_PATH"
+        sudo cp "$ICON_PNG" "$ICON_APP_PATH"
     done
-    rm -r "$icon_folder_path"
-    cd "$current_dir"
-    icon_path="$game_name"
+    rm -r "$ICON_FOLDER_PATH"
+    cd "$CURRENT_DIR"
+    ICON_GAME_PATH="$GAME_NAME"
     updateIconCache
 }
 
@@ -121,16 +121,16 @@ function updateIconCache() {
 
 checkData
 
-if [ $valid_data != 1 ];then
+if [ $VALID_DATA_FLAG != 1 ];then
     show_help
 fi
 
 normalizeName
 printInfo
 
-read -sp "Do you agree with provided data? (y/n)" agree_with_data
+read -sp "Do you agree with provided data? (y/n)" AGREE_WITH_DATA_FLAG
 
-if [ "$agree_with_data" != "y" ]; then
+if [ "$AGREE_WITH_DATA_FLAG" != "y" ]; then
     exit 0;
 fi
 

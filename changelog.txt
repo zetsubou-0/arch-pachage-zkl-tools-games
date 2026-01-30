@@ -20,3 +20,7 @@ Add examples.
 Add man page.
 Auto extract icons.
 
+1.0.5-2
+Rename variables (upper case)
+Update and format MAN page.
+
