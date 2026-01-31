@@ -24,3 +24,6 @@ Auto extract icons.
 Rename variables (upper case)
 Update and format MAN page.
 
+1.0.6-1
+Add possibilities to remove launcher.
+Isolates HOME dir.

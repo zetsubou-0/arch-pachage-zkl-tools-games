@@ -3,8 +3,7 @@ set -euo pipefail
 
 PATH_TO_BIN="${1:?Usage: proton-run <path_to_exe>}"
 
-if [ -e /usr/share/steam/compatibilitytools.d/proton-cachyos/proton ]
-then
+if [ -e /usr/share/steam/compatibilitytools.d/proton-cachyos/proton ]; then
     echo "Proton executable exists"
 else
     echo "Proton executable does not exist"
@@ -24,6 +23,18 @@ fi
 
 export STEAM_COMPAT_DATA_PATH="$COMPAT_ROOT"
 export STEAM_COMPAT_CLIENT_INSTALL_PATH="${STEAM_COMPAT_CLIENT_INSTALL_PATH:-$HOME/.local/share/Steam}"
+
+# isolate wine "user" home away from your real ~
+export HOME="$COMPAT_ROOT/home"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+if [ -e "$HOME" ]; then
+    echo "Isolated home exists: $HOME"
+else
+    echo "Create isolated home dir: $HOME"
+    mkdir -p "$HOME"
+fi
 
 PROTON="/usr/share/steam/compatibilitytools.d/proton-cachyos/proton"
 

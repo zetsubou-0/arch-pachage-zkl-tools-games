@@ -38,11 +38,24 @@ Directory where the generated launch script will be stored.
 Path to the game icon file (for example, .ico or .png).
 
 .TP
+.BR \-r " " \fIname\fR
+Name of the existing game launcher which will be removed.
+
+.TP
 .BR \-h
 Show help information and exit.
 
 .SH EXAMPLES
-Create a launcher for Warcraft III:
+Create a launcher for Warcraft III, icon automatically extracted from exe file:
+
+.nf
+create-game \\
+    -p "/mnt/store/Games/Warcraft 3/Frozen Throne.exe" \\
+    -n war3 \\
+    -s ~/scripts
+.fi
+
+Create a launcher for Warcraft III, specify icon:
 
 .nf
 create-game \\
@@ -50,6 +63,14 @@ create-game \\
     -n war3 \\
     -s ~/scripts \\
     -i "/mnt/store/Games/Warcraft 3/replays.ico"
+.fi
+
+Remove existing launcher for Warcraft III:
+
+.nf
+create-game \\
+    -r war3 \\
+    -s ~/scripts
 .fi
 
 .SH FILES

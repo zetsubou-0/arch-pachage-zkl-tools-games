@@ -9,19 +9,21 @@ GAME_PATH=""
 GAME_NAME=""
 SCRIPT_PATH=""
 ICON_GAME_PATH=""
+REMOVE_GAME_LAUNCHER=""
 VALID_DATA_FLAG=1
 AGREE_WITH_DATA_FLAG=""
 
-while getopts p:n:s:i:h option
+while getopts p:n:s:i:r:h option
 do
-  case "${option}"
-      in
-          p) GAME_PATH=${OPTARG};;
-          n) GAME_NAME=${OPTARG};;
-          s) SCRIPT_PATH=${OPTARG};;
-          i) ICON_GAME_PATH=${OPTARG};;
-          h) show_help;;
-          *) show_help;;
+    case "${option}"
+        in
+            p) GAME_PATH=${OPTARG};;
+            n) GAME_NAME=${OPTARG};;
+            s) SCRIPT_PATH=${OPTARG};;
+            i) ICON_GAME_PATH=${OPTARG};;
+            r) REMOVE_GAME_LAUNCHER=${OPTARG};;
+            h) show_help;;
+            *) show_help;;
   esac
 done
 
@@ -33,6 +35,7 @@ Create game launcher based on the provided data
 -n  game name
 -s  folder with scripts
 -i  game icon
+-r remove game launcher and related data
 -h  show help
 "
     exit 0
@@ -86,8 +89,12 @@ Exec=$SCRIPT_FULL_PATH
 Icon=$ICON_GAME_PATH
 Terminal=false
 Categories=Game;
-" | sudo tee "/usr/share/applications/$GAME_NAME.desktop" > /dev/null
+" | sudo tee "$(createDesktopEntityPath "$GAME_NAME")" > /dev/null
     echo "Creating desktop entity ..."
+}
+
+function createDesktopEntityPath() {
+    echo "/usr/share/applications/$1.desktop"
 }
 
 function extractIcons() {
@@ -118,6 +125,41 @@ function updateIconCache() {
     sudo gtk-update-icon-cache -f /usr/share/icons/hicolor
     sudo update-desktop-database /usr/share/applications
 }
+
+function removeGameLauncher() {
+    if [ -e "$(createDesktopEntityPath "$REMOVE_GAME_LAUNCHER")" ]; then
+        echo "The game '$REMOVE_GAME_LAUNCHER' exists."
+    else
+        echo "The game '$REMOVE_GAME_LAUNCHER' does not exist."
+        exit 1
+    fi
+    removeScript
+    removeDesktopEntity
+}
+
+function removeScript() {
+    if [ -z "$SCRIPT_PATH" ]; then
+        echo "Script path is empty, please specify the script path with '-s' key"
+        exit 1
+    fi
+    local PATH="${SCRIPT_PATH%/}/$REMOVE_GAME_LAUNCHER.sh"
+    if [ -e "$PATH" ]; then
+        rm "$PATH"
+        echo "Script under $PATH has been removed."
+    else
+        echo "Script under $PATH is no longer exist, no action required."
+    fi
+}
+
+function removeDesktopEntity() {
+    sudo rm "$(createDesktopEntityPath "$REMOVE_GAME_LAUNCHER")"
+    echo "Desktop launcher for '$REMOVE_GAME_LAUNCHER' has been removed."
+}
+
+if [ -n "$REMOVE_GAME_LAUNCHER" ]; then
+    removeGameLauncher
+    exit 0
+fi
 
 checkData
 
