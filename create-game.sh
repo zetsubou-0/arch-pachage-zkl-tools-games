@@ -142,12 +142,12 @@ function removeScript() {
         echo "Script path is empty, please specify the script path with '-s' key"
         exit 1
     fi
-    local PATH="${SCRIPT_PATH%/}/$REMOVE_GAME_LAUNCHER.sh"
-    if [ -e "$PATH" ]; then
-        rm "$PATH"
-        echo "Script under $PATH has been removed."
+    local SCRIPT_FULL_PATH="${SCRIPT_PATH%/}/$REMOVE_GAME_LAUNCHER.sh"
+    if [ -e "$SCRIPT_FULL_PATH" ]; then
+        rm "$SCRIPT_FULL_PATH"
+        echo "Script under $SCRIPT_FULL_PATH has been removed."
     else
-        echo "Script under $PATH is no longer exist, no action required."
+        echo "Script under $SCRIPT_FULL_PATH is no longer exist, no action required."
     fi
 }
 
