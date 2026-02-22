@@ -72,7 +72,7 @@ function createScript() {
     echo "Creating script ..."
     echo "#!/usr/bin/env bash
 
-proton-run '$GAME_PATH'
+proton-run -e '$GAME_PATH'
     " > "$SCRIPT_FULL_PATH"
     chmod +x "$SCRIPT_FULL_PATH"
     echo "Script has been created successfully."

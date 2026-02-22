@@ -1,28 +1,30 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PATH_TO_BIN="${1:?Usage: proton-run <path_to_exe> [prefix]}"
+PATH_TO_BIN=""
 PREFIX_NAME="default"
-
-while getopts p:h option
-do
-    case "${option}"
-        in
-            p) PREFIX_NAME=${OPTARG};;
-            h) show_help;;
-            *) show_help;;
-  esac
-done
 
 function show_help() {
     echo "
-Usage: proton-run <path_to_exe> [prefix]
+Usage: proton-run [options]
 
+-e  path to exe
 -p  prefix name
 -h  show help
 "
     exit 0
 }
+
+while getopts e:p:h option
+do
+    case "${option}"
+        in
+            e) PATH_TO_BIN=${OPTARG};;
+            p) PREFIX_NAME=${OPTARG};;
+            h) show_help;;
+            *) show_help;;
+  esac
+done
 
 if [ -e /usr/share/steam/compatibilitytools.d/proton-cachyos/proton ]; then
     echo "Proton executable exists"
@@ -31,7 +33,12 @@ else
     exit 1;
 fi
 
-echo "Execute for path: $PATH_TO_BIN"
+if [ -z "$PATH_TO_BIN" ]; then
+    echo "[ERROR] Please specify path to exe (bin)."
+    exit 1;
+else
+    echo "Execute for path: '$PATH_TO_BIN' and prefix: '$PREFIX_NAME'"
+fi
 
 COMPAT_ROOT="/var/lib/proton-prefix/$PREFIX_NAME"   # compatdata root
 PFX_DIR="$COMPAT_ROOT/pfx"                          # actual wine prefix lives here
