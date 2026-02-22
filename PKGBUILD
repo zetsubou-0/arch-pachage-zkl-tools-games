@@ -1,7 +1,7 @@
 # Maintainer: Kiryl Lutsyk <zetsubou.zero.0@gmail.com>
 pkgname=zkl-tools-games
-pkgver=1.0.6
-pkgrel=2
+pkgver=1.0.7
+pkgrel=1
 epoch=
 pkgdesc="This tools package is based on Proton compatibility and is used to simplify working with Windows games."
 arch=(
@@ -33,11 +33,13 @@ changelog=changelog.txt
 source=(
     "proton-run.sh"
     "proton-prefix.conf"
+    "proton-run.1"
     "create-game.1"
     "create-game.sh"
 )
 noextract=()
 sha256sums=(
+    "SKIP"
     "SKIP"
     "SKIP"
     "SKIP"
@@ -53,6 +55,8 @@ package() {
     install -Dm755 "$srcdir/create-game.sh"   "$pkgdir/usr/bin/create-game"
 
     # install man page
+    install -Dm644 $srcdir/proton-run.1 \
+        "$pkgdir/usr/share/man/man1/proton-run.1"
     install -Dm644 $srcdir/create-game.1 \
         "$pkgdir/usr/share/man/man1/create-game.1"
 

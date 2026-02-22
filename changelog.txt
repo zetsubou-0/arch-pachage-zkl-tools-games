@@ -30,3 +30,7 @@ Isolates HOME dir.
 
 1.0.6-2
 Bugfix
+
+1.0.7-1
+Add possibilities to choose prefix name.
+Add man page for proton-run
