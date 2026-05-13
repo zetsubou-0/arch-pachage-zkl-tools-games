@@ -1,7 +1,8 @@
 # Game Tools
 
 ## About
-This tools package is based on Proton compatibility and is used to simplify working with Windows games.
+This tools package is based on Proton compatibility and is used to simplify working with Windows games. 
+It has been tested on the Arch based distro - CachyOS (please take a look at the details in the appendix)
 
 ## How to add to the repository
 
@@ -54,5 +55,12 @@ create-game \
     -i "/mnt/store/Games/Warcraft 3/replays.ico"
 ```
 
+## Appendix
 
+### Test environment:
+
+#### Distro is CachyOS
+#### Kernel is 6.19.11-1-cachyos (64 bit)
+#### Desktop is KDE Plasma
+#### KDE Plasma version is 6.6.4
 

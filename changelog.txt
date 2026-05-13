@@ -39,3 +39,5 @@ Add man page for proton-run
 Bugfix.
 Add options to proton-run.
 
+1.0.8-2
+Add required dependency: proton-cachyos
